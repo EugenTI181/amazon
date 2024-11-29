@@ -41,7 +41,7 @@ products.forEach((product) => {
 
       <div class="product-spacer"></div>
 
-      <div class="added-to-cart">
+      <div class="added-to-cart added-message-${product.id}">
         <img src="images/icons/checkmark.png">
         Added
       </div>
@@ -55,6 +55,12 @@ products.forEach((product) => {
 });
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
+
+// We're going to use an object to save the timeout ids.
+// The reason we use an object is because each product
+// will have its own timeoutId. So an object lets us
+// save multiple timeout ids for different products.
+const addedMessageTimeouts = {};
 
 document.querySelectorAll('.js-add-to-cart')
   .forEach((button) => {
@@ -87,6 +93,23 @@ document.querySelectorAll('.js-add-to-cart')
       cart.forEach((item) => {
         cartQuantity += item.quantity;
       });
+
+      const addedToCart = document.querySelector(`.added-message-${productId}`);
+      addedToCart.classList.add("displayMess");
+
+      //Check ig there's a previous timeout for this product.
+      //If there is, we should stop it.
+      const previousTimeoutId = addedMessageTimeouts[productId];
+      if (previousTimeoutId) {
+        clearTimeout(previousTimeoutId);
+      }
+  
+      const timeoutId = setTimeout(() => { 
+        addedToCart.classList.remove("displayMess");
+      }, 2000);
+
+      //Save the timeoutId for this product so we can stop it later if we need to.
+      addedMessageTimeouts[productId] = timeoutId;
 
       document.querySelector('.js-cart-quantity')
         .innerHTML = cartQuantity;
