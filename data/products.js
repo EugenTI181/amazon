@@ -656,5 +656,19 @@ const products = [
         "apparel",
         "mens"
       ]
+    },
+    {
+      id: "ves324-432-34g-2gbds-rle34",
+      image: "images/products/umbrella.jpg",
+      name: "Black Umbrella",
+      rating: {
+        stars: 4,
+        count: 2590
+      },
+      priceCents: 1900,
+      keywords: [
+        "umbrella",
+        "accessories"
+      ]
     }
   ];
